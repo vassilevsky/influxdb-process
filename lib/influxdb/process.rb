@@ -4,17 +4,15 @@ require "influxdb/process/version"
 module InfluxDB
   module Process
     class Instrumentation
-      def initialize(influxdb, series = 'process_metrics', interval = 10)
+      def initialize(influxdb, series: 'process_metrics', interval: 10, process: nil)
+        @process = ENV['INFLUXDB_PROCESS_NAME'] || process || $PROGRAM_NAME
+
         Thread.new do
           loop do
-            influxdb.write_point(series, tags: {process: process}, values: GC.stat)
+            influxdb.write_point(series, tags: {process: @process}, values: GC.stat)
             sleep(interval)
           end
         end
-      end
-
-      def process
-        @process ||= ENV['INFLUXDB_PROCESS_NAME'] || $PROGRAM_NAME
       end
     end
   end
