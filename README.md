@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/influxdb-process.svg)](https://badge.fury.io/rb/influxdb-process)
 [![Build Status](https://travis-ci.org/vassilevsky/influxdb-process.svg?branch=master)](https://travis-ci.org/vassilevsky/influxdb-process)
 
 # InfluxDB::Process
