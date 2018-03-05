@@ -28,11 +28,21 @@ Let's say you have the client in the `influxdb` variable, as it says.
 Add this to any place in your Ruby program:
 
 ```ruby
-InfluxDB::Process::Instrumentation.new(influxdb)
+InfluxDB::Process::Instrumentation.new(influxdb).start
 ```
 
 When you deploy this, the process where this code is executed will create a new thread.
 It will periodically collect process metrics and send them to InfluxDB via the provided client.
+
+Alternatively, you can instrument whenever you want (after each request / job / batch):
+
+```ruby
+# in an initializer, once
+p = InfluxDB::Process::Instrumentation.new(influxdb)
+
+# later, in an appropriate place, as many times as needed
+p.instrument
+```
 
 You can pass additional options to customize the behavior of this gem. Here they are (with default values):
 

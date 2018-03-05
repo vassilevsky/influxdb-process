@@ -6,8 +6,13 @@ require "influxdb/process/version"
 module InfluxDB
   module Process
     class Instrumentation
-      def initialize(influxdb, memory_series: 'process_memory', object_series: 'process_objects', interval: 10, process: nil)
+      def initialize(influxdb, memory_series: nil, object_series: nil, interval: nil, process: nil)
+        @influxdb = influxdb
+        @memory_series = memory_series || 'process_memory'
+        @object_series = object_series || 'process_objects'
+        @interval = interval || 10
         @process = ENV['INFLUXDB_PROCESS_NAME'] || process || $PROGRAM_NAME
+
         @tags = {process: @process}
 
         @pid = ::Process.pid
@@ -17,16 +22,21 @@ module InfluxDB
 
         @memory = {}
         @objects = {}
+      end
 
+      def instrument
+        update_memory
+        update_objects
+
+        @influxdb.write_point(@memory_series, tags: @tags, values: @memory)
+        @influxdb.write_point(@object_series, tags: @tags, values: @objects)
+      end
+
+      def start
         Thread.new do
           loop do
-            update_memory
-            update_objects
-
-            influxdb.write_point(memory_series, tags: @tags, values: @memory)
-            influxdb.write_point(object_series, tags: @tags, values: @objects)
-
-            sleep(interval)
+            instrument
+            sleep(@interval)
           end
         end
       end
