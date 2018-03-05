@@ -63,6 +63,7 @@ module InfluxDB
         :T_IMEMO    => :memos,
         :T_ICLASS   => :included_modules,
         :T_ZOMBIE   => :zombies,
+        :T_NODE     => :ast_nodes,
         :TOTAL      => :objects_total,
         :FREE       => :free_object_slots,
       }.freeze
