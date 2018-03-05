@@ -76,7 +76,7 @@ It will take precedence over the keyword argument.
 ## Limitations
 
 System memory metrics (total, resident, shared memory used by the process as seen from the OS) are read
-for the `/proc` filesystem. They are not reported on systems where it is not available.
+from the `/proc` filesystem. They are not reported on systems where it is not available.
 
 ## Development
 
@@ -86,7 +86,7 @@ You can also run `bin/console` for an interactive prompt that will allow you to 
 How to test this gem:
 * Install and run InfluxDB
 * Create a `test` database in it
-* Run `make`
+* Run `make points`
 
 It will generate metrics and push them to the `test` database.
 
