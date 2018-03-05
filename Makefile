@@ -1,2 +1,5 @@
+test:
+	bundle exec rake
+
 points:
-	bundle exec ruby test/process.rb
+	bundle exec ruby misc/process.rb
