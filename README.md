@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vassilevsky/influxdb-process.svg?branch=master)](https://travis-ci.org/vassilevsky/influxdb-process)
+
 # InfluxDB::Process
 
 Gathers metrics from the Ruby process it is executed in and sends them to an InfluxDB database.
